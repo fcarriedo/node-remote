@@ -1,0 +1,48 @@
+<!--
+This should be browsed with the server running:
+#>node socket.io-server.js
+-->
+
+<html>
+  <head>
+    <style type='text/css'>
+      button {
+        height: 40px;
+        width: 150px;
+      }
+    </style>
+    <script src="http://cdn.socket.io/stable/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+    <script type='text/javascript'>
+      $(document).ready(init);
+
+      var socket = new io.Socket('192.168.0.101', {'port':3000});
+      socket.connect();
+
+      function init(){
+        socket.on('connect', function() {$('#status').text('connection sucessful');});
+        socket.on('disconnect', function() {$('#status').text('server issued a disconnection'); socket.connect();});
+      }
+
+      function remotePlay() {
+        socket.send({action: 'play'});
+      }
+
+      function remotePause() {
+        socket.send({action: 'pause'});
+      }
+
+    </script>
+  </head>
+  <body style='background-color: #666; color: white; font-family: sans-serif;'>
+    <h2>Use the controls to play and pause the remote video</h2>
+    <div id='status' style='font-size: 9pt; color: #aaa;'></div> <br/>
+
+    <br/><br/>
+
+    <div id='control-buttons'>
+      <button id='play' onClick='remotePlay()'>Play</button>
+      <button id='pause' onClick='remotePause()'>Pause</button>
+    </div>
+  </body>
+</html>

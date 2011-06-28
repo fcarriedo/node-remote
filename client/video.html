@@ -1,0 +1,38 @@
+<!--
+This should be browsed with the server running:
+#>node socket.io-server.js
+-->
+
+<html>
+  <head>
+    <script src="http://cdn.socket.io/stable/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.4.3.min.js"></script>
+    <script type='text/javascript'>
+      $(document).ready(init);
+
+      var socket = new io.Socket('192.168.0.101', {'port':3000});
+      socket.connect();
+
+      function init(){
+        socket.on('connect', function() {$('#status').text('connection sucessful');});
+        socket.on('disconnect', function() {$('#status').text('server issued a disconnection'); socket.connect();});
+        socket.on('message', function(data){
+            if(data == 'play') { 
+            document.getElementById('demo-video').play();
+            } else if(data == 'pause') {
+            document.getElementById('demo-video').pause();
+            }
+            });
+      }
+    </script>
+  </head>
+  <body style='background-color: #666; color: white; font-family: sans-serif;'>
+    <h2>Remote Controlled Video</h2>
+    <div id='status' style='font-size: 9pt; color: #aaa;'></div> <br/>
+
+    <br/><br/>
+
+    <video id='demo-video' src='assets/videos/trailer_test.mp4' loop='loop'></video>
+
+  </body>
+</html>
