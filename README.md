@@ -1,15 +1,17 @@
-== Remote Control based on Node.js and Socket.IO
+## Remote Control based on Node.js and Socket.IO
 
 This is a very initial POC.
 
-==== Server
+## Server
 
 To run the server:
 
+```sh
     cd server
     node remote-control-server.js
+```
 
-==== Client
+## Client
 
 To test the client, put all the files under the client directory under
 apache (or your favorite web server) and then point
